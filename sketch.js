@@ -4,6 +4,10 @@ let predictions = [];
 
 // 需要連線的特徵點編號 (嘴唇外輪廓)
 const targetPoints = [409, 270, 269, 267, 0, 37, 39, 40, 185, 61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291];
+// 需要連線的特徵點編號 (左眼輪廓)
+const leftEyePoints = [33, 246, 161, 160, 159, 158, 157, 173, 133, 155, 154, 153, 145, 144, 163, 7];
+// 需要連線的特徵點編號 (右眼輪廓)
+const rightEyePoints = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -55,6 +59,37 @@ function draw() {
       }
     }
     endShape(CLOSE); // 封閉形狀
+    
+    // ------ 畫出左眼特徵點連線 ------
+    stroke(0, 255, 0); // 將線條顏色改為綠色
+    beginShape();
+    for (let i = 0; i < leftEyePoints.length; i++) {
+      let index = leftEyePoints[i];
+      if (keypoints[index]) {
+        let x = keypoints[index][0];
+        let y = keypoints[index][1];
+        
+        let mappedX = map(x, 0, video.width, -imgWidth / 2, imgWidth / 2);
+        let mappedY = map(y, 0, video.height, -imgHeight / 2, imgHeight / 2);
+        vertex(mappedX, mappedY);
+      }
+    }
+    endShape(CLOSE);
+    
+    // ------ 畫出右眼特徵點連線 ------
+    beginShape();
+    for (let i = 0; i < rightEyePoints.length; i++) {
+      let index = rightEyePoints[i];
+      if (keypoints[index]) {
+        let x = keypoints[index][0];
+        let y = keypoints[index][1];
+        
+        let mappedX = map(x, 0, video.width, -imgWidth / 2, imgWidth / 2);
+        let mappedY = map(y, 0, video.height, -imgHeight / 2, imgHeight / 2);
+        vertex(mappedX, mappedY);
+      }
+    }
+    endShape(CLOSE);
   }
   
   pop();
