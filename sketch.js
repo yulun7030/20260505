@@ -174,7 +174,7 @@ function drawSubmarineFrame(x, y, w, h) {
   drawingContext.shadowColor = 'rgba(0, 0, 0, 0.7)';
   noFill();
   stroke('#5C6B73'); // 鐵灰色
-  strokeWeight(80);
+  strokeWeight(80); // 恢復原本的粗外框，否則看不到潛水艇
   rect(0, 0, w + 80, h + 80, 40); // 圓角外框
   
   // 關閉陰影以免影響後續繪圖
@@ -209,4 +209,17 @@ function drawSubmarineFrame(x, y, w, h) {
   }
   
   pop();
+}
+
+// --- 加入滑鼠點擊產生泡泡的互動效果 ---
+function mousePressed() {
+  for (let i = 0; i < 5; i++) {
+    seaCreatures.push({
+      x: mouseX + random(-30, 30), // 在滑鼠點擊的周圍隨機散開
+      y: mouseY + random(-30, 30),
+      emoji: '🫧',
+      size: random(30, 60),
+      speed: random(1.5, 3.5)
+    });
+  }
 }
